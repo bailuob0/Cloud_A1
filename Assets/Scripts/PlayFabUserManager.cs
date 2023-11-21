@@ -6,6 +6,7 @@ using PlayFab.ClientModels;
 using TMPro;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 //using System.ComponentModel;
 
 public class PlayFabUserManager : MonoBehaviour
@@ -109,12 +110,14 @@ public class PlayFabUserManager : MonoBehaviour
         if (if_email.isActiveAndEnabled && !if_username.isActiveAndEnabled)
         {
             OnButtonLoginEmail();
+            SceneManager.LoadScene("Menu");
             return;
         }
 
         if (!if_email.isActiveAndEnabled && if_username.isActiveAndEnabled)
         {
             OnButtonLoginUserName();
+            SceneManager.LoadScene("Menu");
             return;
         }
     }
@@ -161,5 +164,14 @@ public class PlayFabUserManager : MonoBehaviour
     void OnLeaderboardUpdate(UpdatePlayerStatisticsResult r)
     {
         UpdateMessage("Successful leaderboard sent: " + r.ToString());
+    }
+
+    public void OnButtonLogout()
+    {
+        PlayFabClientAPI.ForgetAllCredentials();
+
+         Debug.Log("Successfully logged out!");
+
+        SceneManager.LoadScene("StartMenu");
     }
 }
