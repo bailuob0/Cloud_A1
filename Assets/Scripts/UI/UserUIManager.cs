@@ -17,7 +17,9 @@ public class UserUIManager : MonoBehaviour
 
     void Start()
     {
-        
+        var req = new GetAccountInfoRequest();
+
+        usernameText.text = "User:" + req.TitleDisplayName;
     }
 
     private void UpdateCurrentPlayerUI()
