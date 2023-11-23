@@ -24,7 +24,6 @@ public class PlayFabCurrencyManager : MonoBehaviour
     public void GetVirtualCurrencies()
     {
         PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnGetuserInventorySuccess, OnError);
-
     }
 
     void OnGetuserInventorySuccess(GetUserInventoryResult result)
