@@ -67,8 +67,15 @@ public class PlayFabCurrencyManager : MonoBehaviour
             ItemId = catalogItems[itemIndex].ItemId,
             VirtualCurrency = "CN",
             Price = (int)catalogItems[itemIndex].VirtualCurrencyPrices["CN"]
-
         };
+
+        PlayFabClientAPI.PurchaseItem(buyRequest, OnBuyItemSuccess, OnError);
+    }
+
+    void OnBuyItemSuccess(PurchaseItemResult result)
+    {
+        Debug.Log("omg u made a purchase owo");
+        GetVirtualCurrencies();
     }
 
     private void OnError(PlayFabError e)
