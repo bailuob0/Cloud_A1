@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class PlayFabUserManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text messageBox;
-    [SerializeField] private TMP_InputField if_username, if_email, if_password, if_score, if_displayName;
+    [SerializeField] private TMP_InputField if_username, if_email, if_password, if_displayName;
    
     public void OnButtonRegisterUser()
     {
@@ -68,7 +68,7 @@ public class PlayFabUserManager : MonoBehaviour
 
     void OnLoginSuccess(LoginResult r)
     {
-        UpdateMessage("Login Success!" + r.PlayFabId + r.InfoResultPayload.PlayerProfile.DisplayName);
+        UpdateMessage("Login Success! " + r.PlayFabId + " " + r.InfoResultPayload.PlayerProfile.DisplayName);
     }
 
     public void OnButtonLoginEmail()
@@ -105,6 +105,22 @@ public class PlayFabUserManager : MonoBehaviour
         PlayFabClientAPI.LoginWithPlayFab(loginRequest, OnLoginSuccess, OnError);
     }
 
+    public void OnButtonGuestLogin()
+    {
+        var loginRequest = new LoginWithEmailAddressRequest
+        {
+            Email = "guest@gmail.com",
+            Password = "123456",
+
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
+                GetPlayerProfile = true
+            }
+        };
+
+        PlayFabClientAPI.LoginWithEmailAddress(loginRequest, OnLoginSuccess, OnError);
+    }
+
     public void OnButtonLogin()
     {
         if (if_email.isActiveAndEnabled && !if_username.isActiveAndEnabled)
@@ -122,56 +138,11 @@ public class PlayFabUserManager : MonoBehaviour
         }
     }
 
-    public void OnButtonGetLeaderboard()
-    {
-        var lbreq = new GetLeaderboardRequest
-        {
-            StatisticName = "highscore",
-            StartPosition = 0,
-            MaxResultsCount = 10
-        };
-        PlayFabClientAPI.GetLeaderboard(lbreq, OnLeaderboardGet, OnError);
-    }
-
-    void OnLeaderboardGet(GetLeaderboardResult r)
-    {
-        string LeaderboardStr = "Leaderboard\n";
-
-        foreach (var item in r.Leaderboard)
-        {
-            string onerow = item.Position + "/" + item.DisplayName + "/" + item.StatValue + "\n";
-            LeaderboardStr += onerow;
-        }
-
-        UpdateMessage(LeaderboardStr);
-    }
-
-     public void OnButtonSendLeaderboard()
-    {
-        var req = new UpdatePlayerStatisticsRequest
-        {
-            Statistics = new List<StatisticUpdate> {
-                new StatisticUpdate {
-                    StatisticName = "highscore",
-                    Value = int.Parse(if_score.text)
-                }
-            }
-        };
-        UpdateMessage("Submitting score: " + if_score.text);
-        PlayFabClientAPI.UpdatePlayerStatistics(req, OnLeaderboardUpdate, OnError);
-    }
-
-    void OnLeaderboardUpdate(UpdatePlayerStatisticsResult r)
-    {
-        UpdateMessage("Successful leaderboard sent: " + r.ToString());
-    }
-
     public void OnButtonLogout()
     {
         PlayFabClientAPI.ForgetAllCredentials();
-
-         Debug.Log("Successfully logged out!");
-
         SceneManager.LoadScene("StartMenu");
+
+        Debug.Log("Successfully logged out!");
     }
 }

@@ -24,6 +24,9 @@ public class GameController : MonoBehaviour {
     private int score;
     private List<GameObject> asteroids;
 
+    [SerializeField]
+    private PlayFabLeaderboardManager leaderboardManager;
+
     private void Start() {
         asteroids = new List<GameObject> {
             asteroid,
@@ -75,6 +78,8 @@ public class GameController : MonoBehaviour {
     public void gameIsOver(){
         gameOverText.text = "Game Over";
         gameOver = true;
+
+        leaderboardManager.SendToLeaderboard(score);
     }
 
     public void addScore(int score){
