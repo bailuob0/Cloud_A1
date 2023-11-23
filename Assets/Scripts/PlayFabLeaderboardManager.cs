@@ -13,6 +13,14 @@ public class PlayFabLeaderboardManager : MonoBehaviour
     [SerializeField]
     public TMP_Text leaderboardName;
     
+
+    public void Start()
+    {
+        if (leaderboardName)
+        {
+            OnButtonGetGlobalLeaderboard();
+        }
+    }
     public void OnButtonGetGlobalLeaderboard()
     {
         var lbreq = new GetLeaderboardRequest
