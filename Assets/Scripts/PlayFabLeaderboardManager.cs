@@ -7,13 +7,13 @@ using System;
 
 public class PlayFabLeaderboardManager : MonoBehaviour
 {
-    [SerializeField] 
-    private TMP_InputField if_score, if_displayName;
-
     [SerializeField]
     public List<LeaderboardItemUI> leaderboardItems;
+
+    [SerializeField]
+    public TMP_Text leaderboardName;
     
-    public void OnButtonGetLeaderboard()
+    public void OnButtonGetGlobalLeaderboard()
     {
         var lbreq = new GetLeaderboardRequest
         {
@@ -21,40 +21,12 @@ public class PlayFabLeaderboardManager : MonoBehaviour
             StartPosition = 0,
             MaxResultsCount = 10
         };
+
         PlayFabClientAPI.GetLeaderboard(lbreq, OnLeaderboardGet, OnError);
+
+        leaderboardName.text = "Global Leaderboard";
     }
 
-    // from practical
-    /*
-    void OnLeaderboardGet(GetLeaderboardResult r)
-    {
-        string LeaderboardStr = "Leaderboard\n";
-
-        foreach (var item in r.Leaderboard)
-        {
-            string onerow = item.Position + "/" + item.DisplayName + "/" + item.StatValue + "\n";
-            LeaderboardStr += onerow;
-        }
-
-        UpdateMessage(LeaderboardStr);
-    }
-
-    
-     public void OnButtonSendLeaderboard()
-    {
-        var req = new UpdatePlayerStatisticsRequest
-        {
-            Statistics = new List<StatisticUpdate> {
-                new StatisticUpdate {
-                    StatisticName = "highscore",
-                    Value = int.Parse(if_score.text)
-                }
-            }
-        };
-        UpdateMessage("Submitting score: " + if_score.text);
-        PlayFabClientAPI.UpdatePlayerStatistics(req, OnLeaderboardUpdate, OnError);
-    }
-    */
 
     void OnLeaderboardGet(GetLeaderboardResult r)
     {
@@ -62,6 +34,35 @@ public class PlayFabLeaderboardManager : MonoBehaviour
 
         foreach (var item in r.Leaderboard)
         {
+            leaderboardItems[i].gameObject.SetActive(true);
+            leaderboardItems[i].positionText.text = (item.Position + 1).ToString();
+            leaderboardItems[i].usernameText.text = item.DisplayName;
+            leaderboardItems[i].scoreText.text = item.StatValue.ToString();
+
+            i++;
+        }
+    }
+    public void OnButtonGetNearbyLeaderboard()
+    {
+        var lbreq = new GetLeaderboardAroundPlayerRequest
+        {
+            StatisticName = "highscore",
+            MaxResultsCount = 10
+        };
+
+        PlayFabClientAPI.GetLeaderboardAroundPlayer(lbreq, OnLeaderboardAroundPlayerGet, OnError);
+
+        leaderboardName.text = "Nearby Leaderboard";
+
+    }
+
+     void OnLeaderboardAroundPlayerGet(GetLeaderboardAroundPlayerResult r)
+    {
+        int i = 0;
+
+        foreach (var item in r.Leaderboard)
+        {
+            leaderboardItems[i].gameObject.SetActive(true);
             leaderboardItems[i].positionText.text = (item.Position + 1).ToString();
             leaderboardItems[i].usernameText.text = item.DisplayName;
             leaderboardItems[i].scoreText.text = item.StatValue.ToString();
@@ -92,7 +93,6 @@ public class PlayFabLeaderboardManager : MonoBehaviour
 
     private void OnError(PlayFabError e)
     {
-        //messageBox.text = "Error" + e.GenerateErrorReport();
         Debug.Log("Error" + e.GenerateErrorReport());
     }
 
