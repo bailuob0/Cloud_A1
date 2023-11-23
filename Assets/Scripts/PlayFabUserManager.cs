@@ -1,4 +1,3 @@
-//using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
@@ -7,7 +6,6 @@ using TMPro;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
-//using System.ComponentModel;
 
 public class PlayFabUserManager : MonoBehaviour
 {
