@@ -52,7 +52,7 @@ public class PlayFabLeaderboardManager : MonoBehaviour
     }
     public void OnButtonGetNearbyLeaderboard()
     {
-        var lbreq = new GetLeaderboardAroundPlayerRequest
+        var lbreq = new GetLeaderboardAroundPlayerRequest()
         {
             StatisticName = "highscore",
             MaxResultsCount = 10

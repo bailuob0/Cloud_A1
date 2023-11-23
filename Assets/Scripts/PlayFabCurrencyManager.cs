@@ -11,9 +11,14 @@ public class PlayFabCurrencyManager : MonoBehaviour
 {
     public TMP_Text coinsValueText;
 
+    public List<ShopItemUI> shopItemUIs;
+
+    public List<CatalogItem> catalogItems;
+
     void Start()
     {
         GetVirtualCurrencies();
+        GetCatalog();
     }
 
     public void GetVirtualCurrencies()
@@ -26,6 +31,44 @@ public class PlayFabCurrencyManager : MonoBehaviour
     {
         int coinsAmt = result.VirtualCurrency["CN"];
         coinsValueText.text = "Coins: " + coinsAmt.ToString();
+    }
+
+    public void GetCatalog()
+    {
+        var catalogRequest = new GetCatalogItemsRequest
+        {
+            CatalogVersion = "Items"
+        };
+
+        PlayFabClientAPI.GetCatalogItems(catalogRequest, OnGetCatalogSuccess, OnError);
+    }
+
+    public void OnGetCatalogSuccess(GetCatalogItemsResult result)
+    {
+        catalogItems = result.Catalog;
+
+        int i = 0;
+        foreach (CatalogItem item in catalogItems)
+        {
+            shopItemUIs[i].gameObject.SetActive(true);
+            shopItemUIs[i].Name.text = item.DisplayName;
+            shopItemUIs[i].Description.text = item.Description;
+            shopItemUIs[i].Price.text = item.VirtualCurrencyPrices["CN"].ToString();
+
+            i++;
+        }
+    }
+
+    public void BuyItem(int itemIndex)
+    {   
+        var buyRequest = new PurchaseItemRequest
+        {
+            CatalogVersion = "Items",
+            ItemId = catalogItems[itemIndex].ItemId,
+            VirtualCurrency = "CN",
+            Price = (int)catalogItems[itemIndex].VirtualCurrencyPrices["CN"]
+
+        };
     }
 
     private void OnError(PlayFabError e)
