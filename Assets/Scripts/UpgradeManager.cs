@@ -37,5 +37,5 @@ public class UpgradeManager : MonoBehaviour
         Debug.Log(shipStats.MoveSpeed);
     }
 
-    
+        
 }

@@ -10,8 +10,6 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     public List<ShopItemUI> shopItemUIs;
 
-    public GameObject catImage;
-
     public UpgradeManager upgradeManager;
 
     [HideInInspector]

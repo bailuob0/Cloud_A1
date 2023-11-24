@@ -10,7 +10,6 @@ public class PlayerFabDataManager : MonoBehaviour
 {
     [SerializeField] ShipStats shipStats;
 
-
     // call when player buys stuff + logs out
     public void SendData()
     {
@@ -45,8 +44,12 @@ public class PlayerFabDataManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(result.Data["Stats"].Value, shipStats);
         }
 
+        // if no existing save exists, set default values and send 
         else
+        {
             shipStats.Reset();
+            SendData();
+        }
     }
 
     private void OnError(PlayFabError e)

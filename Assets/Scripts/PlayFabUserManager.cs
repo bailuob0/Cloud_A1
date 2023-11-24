@@ -52,23 +52,6 @@ public class PlayFabUserManager : MonoBehaviour
         UpdateMessage("display name updated!" + r.DisplayName);
     }
 
-    private void OnError(PlayFabError e)
-    {
-        //messageBox.text = "Error" + e.GenerateErrorReport();
-        Debug.Log("Error" + e.GenerateErrorReport());
-    }
-
-    public void UpdateMessage(string msg)
-    {
-        if (messageBox)
-        {
-            messageBox.text = msg;
-            return;
-        }
-        
-        Debug.Log(msg);
-    }
-
     void OnLoginSuccess(LoginResult r)
     {
         UpdateMessage("Login Success! " + r.PlayFabId + " " + r.InfoResultPayload.PlayerProfile.DisplayName);
@@ -148,5 +131,22 @@ public class PlayFabUserManager : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
 
         Debug.Log("Successfully logged out!");
+    }
+
+     private void OnError(PlayFabError e)
+    {
+        //messageBox.text = "Error" + e.GenerateErrorReport();
+        Debug.Log("Error" + e.GenerateErrorReport());
+    }
+
+    public void UpdateMessage(string msg)
+    {
+        if (messageBox)
+        {
+            messageBox.text = msg;
+            return;
+        }
+        
+        Debug.Log(msg);
     }
 }

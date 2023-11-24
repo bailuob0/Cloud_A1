@@ -262,7 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e556055501c944571a115bf6dac886af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   tiltMultiplier: 5
   boundary:
     xMin: -6
@@ -272,6 +271,8 @@ MonoBehaviour:
   shot: {fileID: 1273388748716176, guid: 86f0bbe5135f3497e924b0fbb9d06f11, type: 3}
   shotSpawn: {fileID: 4246698267964798}
   shotSpawn2: {fileID: 4869784285621466}
+  shipStats: {fileID: 11400000, guid: 41d7bd7b1a5462848b98f6d288bcb5a7, type: 2}
+  speed: 10
   fireRate: 0.25
 --- !u!1 &1464942715097832
 GameObject:

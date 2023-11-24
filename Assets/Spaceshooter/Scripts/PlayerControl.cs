@@ -11,17 +11,25 @@ public class PlayerControl : MonoBehaviour {
 
     private Rigidbody playerRb;
     private AudioSource playerWeapon;
-    public float speed;
     public float tiltMultiplier;
     public Boundary boundary;
 
     public GameObject shot;
     public Transform shotSpawn;
     public Transform shotSpawn2;
+    private CharacterSelection characterSelection;
+
+    [SerializeField]
+    ShipStats shipStats;
+
+    [HideInInspector]
+    public float speed;
+    
+    [HideInInspector]
     public float fireRate;
 
+    [HideInInspector]
     private float nextFire;
-    private CharacterSelection characterSelection;
 
     private void Start() {
         GameObject cSelectionObject = GameObject.FindWithTag("CharacterSelection");
@@ -29,7 +37,9 @@ public class PlayerControl : MonoBehaviour {
             characterSelection = cSelectionObject.GetComponent<CharacterSelection>();
         }
 
-
+        speed = shipStats.MoveSpeed;
+        fireRate = shipStats.FireRate;
+        
         playerRb = GetComponent<Rigidbody>();
         playerWeapon = GetComponent<AudioSource>();
     }
