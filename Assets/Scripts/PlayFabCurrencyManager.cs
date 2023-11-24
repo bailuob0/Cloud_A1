@@ -16,7 +16,7 @@ public class PlayFabCurrencyManager : MonoBehaviour
     [HideInInspector]
     public List<CatalogItem> catalogItems;
 
-    void Start()
+    public void PrepareShop()
     {
         GetVirtualCurrencies();
         GetCatalog();
