@@ -1,18 +1,19 @@
 using System;
+using UnityEngine;
 
-[Serializable]
-public struct ShipStats
+[CreateAssetMenu]
+public class ShipStats :ScriptableObject
 {
-    public static ShipStats Default = new()
-    {
-        MoveSpeed = 10,
-        FireRate = 0.25f,
-        BulletSpeed = 20,
-        hasCat = false
-    };
+    public float MoveSpeed = 10f;
+    public float FireRate =0.25f;
+    public float BulletSpeed = 20f;
+    public bool hasCat = false;
 
-    public float MoveSpeed;
-    public float FireRate;
-    public float BulletSpeed;
-    public bool hasCat;
+    public void Reset()
+    {
+        MoveSpeed = 10f;
+        FireRate =0.25f;
+        BulletSpeed = 20f;
+        hasCat = false;
+    }
 }

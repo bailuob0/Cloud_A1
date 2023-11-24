@@ -11,7 +11,7 @@ public class PlayerFabDataManager : MonoBehaviour
     [SerializeField] ShipStats shipStats;
 
 
-    // call when player buys stuff
+    // call when player buys stuff + logs out
     public void SendData()
     {
         string shipStatsAsJson = JsonUtility.ToJson(shipStats);
@@ -42,8 +42,11 @@ public class PlayerFabDataManager : MonoBehaviour
     {
         if (result.Data != null && result.Data.ContainsKey("Stats"))
         {
-            ShipStats savedStats = JsonUtility.FromJson<ShipStats>(result.Data["Stats"].Value);
+            JsonUtility.FromJsonOverwrite(result.Data["Stats"].Value, shipStats);
         }
+
+        else
+            shipStats.Reset();
     }
 
     private void OnError(PlayFabError e)

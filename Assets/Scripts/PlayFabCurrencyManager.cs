@@ -3,9 +3,6 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
-using System;
-using Unity.VisualScripting;
-using UnityEngine.SceneManagement;
 
 public class PlayFabCurrencyManager : MonoBehaviour
 {
@@ -14,6 +11,8 @@ public class PlayFabCurrencyManager : MonoBehaviour
     public List<ShopItemUI> shopItemUIs;
 
     public GameObject catImage;
+
+    public UpgradeManager upgradeManager;
 
     [HideInInspector]
     public List<CatalogItem> catalogItems;
@@ -81,8 +80,12 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     void OnBuyItemSuccess(PurchaseItemResult result)
     {
-        Debug.Log("omg u made a purchase owo");
+        //Debug.Log("omg u made a purchase owo");
+
+        string itemName = result.Items[0].ItemId;
+
         GetVirtualCurrencies();
+        upgradeManager.ChangeShipStats(itemName);
     }
 
     private void OnError(PlayFabError e)

@@ -9,8 +9,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayFabUserManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text messageBox;
-    [SerializeField] private TMP_InputField if_username, if_email, if_password, if_displayName;
+    [SerializeField] 
+    private TMP_Text messageBox;
+    [SerializeField] 
+    private TMP_InputField if_username, if_email, if_password, if_displayName;
+
+    [SerializeField]
+    PlayerFabDataManager dataManager;
    
     public void OnButtonRegisterUser()
     {
@@ -67,6 +72,7 @@ public class PlayFabUserManager : MonoBehaviour
     void OnLoginSuccess(LoginResult r)
     {
         UpdateMessage("Login Success! " + r.PlayFabId + " " + r.InfoResultPayload.PlayerProfile.DisplayName);
+        dataManager.GetData();
     }
 
     public void OnButtonLoginEmail()
