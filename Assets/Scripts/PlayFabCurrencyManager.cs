@@ -13,6 +13,7 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     public List<ShopItemUI> shopItemUIs;
 
+    [HideInInspector]
     public List<CatalogItem> catalogItems;
 
     void Start()
