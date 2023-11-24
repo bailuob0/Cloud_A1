@@ -8,49 +8,43 @@ using Unity.VisualScripting;
 
 public class PlayerFabDataManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text XPDisplay;
-    [SerializeField] TMP_InputField XPInput;
+    [SerializeField] ShipStats shipStats;
 
-    public void SetUserData()
+    public void SendData()
     {
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+        string shipStatsAsJson = JsonUtility.ToJson(shipStats);
+
+        var request = new UpdateUserDataRequest
         {
-            Data = new Dictionary<string, string>()
+            Data = new Dictionary<string, string>
             {
-                {"XP", XPInput.text.ToString()}
+                {"Stats", shipStatsAsJson}
             }
-        },
-        result => Debug.Log("Successfully updated user data"),
-        error =>
-        {
-            Debug.Log("Error setting user data XP");
-            Debug.Log(error.GenerateErrorReport());
-        }
-        );
+        };
+
+        PlayFabClientAPI.UpdateUserData(request, OnSendDataSuccess, OnError);
     }
 
-    public void GetUserData(/*string myPlayFabId*/)
+    void OnSendDataSuccess(UpdateUserDataResult result)
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+        Debug.Log("Data sent succesfully");
+    }
+
+    public void GetData()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetDataSuccess, OnError);
+    }
+
+    void OnGetDataSuccess(GetUserDataResult result)
+    {
+        if (result.Data != null && result.Data.ContainsKey("Stats"))
         {
-            // PlayFabId = myPlayFabId,
-            // Keys = null
-        }, result =>
-        {
-            Debug.Log("Got user data:");
-            if (result.Data == null || !result.Data.ContainsKey("XP"))
-            Debug.Log("No XP");
-            else
-            {
-                Debug.Log("XP: " + result.Data["XP"].Value);
-                XPDisplay.text = "XP:" + result.Data["XP"].Value;
-            }
-        },
-        (error) =>
-        {
-            Debug.Log("Error retrieving user data:");
-            Debug.Log(error.GenerateErrorReport());
+            ShipStats savedStats = JsonUtility.FromJson<ShipStats>(result.Data["Stats"].Value);
         }
-        );
+    }
+    
+    private void OnError(PlayFabError e)
+    {
+        Debug.Log("Error" + e.GenerateErrorReport());
     }
 }
