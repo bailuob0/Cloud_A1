@@ -10,6 +10,8 @@ public class PlayerFabDataManager : MonoBehaviour
 {
     [SerializeField] ShipStats shipStats;
 
+
+    // call when player buys stuff
     public void SendData()
     {
         string shipStatsAsJson = JsonUtility.ToJson(shipStats);
@@ -30,6 +32,7 @@ public class PlayerFabDataManager : MonoBehaviour
         Debug.Log("Data sent succesfully");
     }
 
+    //call on login
     public void GetData()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetDataSuccess, OnError);
@@ -42,7 +45,7 @@ public class PlayerFabDataManager : MonoBehaviour
             ShipStats savedStats = JsonUtility.FromJson<ShipStats>(result.Data["Stats"].Value);
         }
     }
-    
+
     private void OnError(PlayFabError e)
     {
         Debug.Log("Error" + e.GenerateErrorReport());

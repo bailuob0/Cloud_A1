@@ -13,8 +13,13 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     public List<ShopItemUI> shopItemUIs;
 
+    public GameObject catImage;
+
     [HideInInspector]
     public List<CatalogItem> catalogItems;
+
+    [HideInInspector]
+    public List<ItemInstance> inventoryItems;
 
     public void PrepareShop()
     {
@@ -24,13 +29,16 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     public void GetVirtualCurrencies()
     {
-        PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnGetuserInventorySuccess, OnError);
+        PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnGetUserInventorySuccess, OnError);
     }
 
-    void OnGetuserInventorySuccess(GetUserInventoryResult result)
+    void OnGetUserInventorySuccess(GetUserInventoryResult result)
     {
         int coinsAmt = result.VirtualCurrency["CN"];
         coinsValueText.text = "Coins: " + coinsAmt.ToString();
+
+        inventoryItems = result.Inventory;
+        CheckPlayerInventory();
     }
 
     public void GetCatalog()
@@ -46,7 +54,6 @@ public class PlayFabCurrencyManager : MonoBehaviour
     public void OnGetCatalogSuccess(GetCatalogItemsResult result)
     {
         catalogItems = result.Catalog;
-
         int i = 0;
         foreach (CatalogItem item in catalogItems)
         {
@@ -82,5 +89,19 @@ public class PlayFabCurrencyManager : MonoBehaviour
     {
         //messageBox.text = "Error" + e.GenerateErrorReport();
         Debug.Log("Error" + e.GenerateErrorReport());
+    }
+
+    public void CheckPlayerInventory()
+    {
+        foreach (var inventoryItem in inventoryItems)
+        {
+            foreach (var shopItem in shopItemUIs)
+            {
+                if (inventoryItem.DisplayName == shopItem.Name.text)
+                {
+                    shopItem.Disable();
+                }
+            }
+        }
     }
 }
