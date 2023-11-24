@@ -35,6 +35,7 @@ public class PlayerFabDataManager : MonoBehaviour
     public void GetData()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetDataSuccess, OnError);
+        Debug.Log("Data Retrieved");
     }
 
     void OnGetDataSuccess(GetUserDataResult result)

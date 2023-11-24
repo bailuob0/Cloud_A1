@@ -113,14 +113,12 @@ public class PlayFabUserManager : MonoBehaviour
         if (if_email.isActiveAndEnabled && !if_username.isActiveAndEnabled)
         {
             OnButtonLoginEmail();
-            SceneManager.LoadScene("Menu");
             return;
         }
 
         if (!if_email.isActiveAndEnabled && if_username.isActiveAndEnabled)
         {
             OnButtonLoginUserName();
-            SceneManager.LoadScene("Menu");
             return;
         }
     }

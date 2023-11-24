@@ -9,4 +9,16 @@ public class SceneChanger : MonoBehaviour
     {
         SceneManager.LoadScene(nextScene);
     }
+
+    public void ChangeSceneDelay(string nextScene)
+    {
+        StartCoroutine(WaitToChangeScene(nextScene));
+    }
+
+    private IEnumerator WaitToChangeScene(string nextScene)
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        ChangeScene(nextScene);
+    }
 }

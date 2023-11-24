@@ -8,13 +8,6 @@ public class MenuUIManager : MonoBehaviour
     [SerializeField]
     ShipStats shipStats;
 
-    public GameObject catImage;
-    
-    void Start()
-    {
-        CheckForCat();
-    }
-    
     public void ClosePanel(GameObject panel)
     {
         panel.SetActive(false);
@@ -30,14 +23,5 @@ public class MenuUIManager : MonoBehaviour
         panel.SetActive(!panel.activeSelf);
     }
 
-    private void CheckForCat()
-    {
-        if (shipStats.hasCat)
-        {
-            catImage.SetActive(true);
-            return;
-        }
-
-        catImage.SetActive(false);
-    }
+    
 }

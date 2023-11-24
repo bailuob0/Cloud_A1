@@ -10,6 +10,15 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField]
     PlayerFabDataManager dataManager;
 
+    
+    public GameObject catImage;
+    
+    void Awake()
+    {
+        catImage.SetActive(false);
+        CheckForCat();
+    }
+
     public void ChangeShipStats(string upgradeName)
     {
         if (upgradeName == "Upgrade1_Speed")
@@ -19,7 +28,7 @@ public class UpgradeManager : MonoBehaviour
 
         if (upgradeName == "Upgrade2_Blaster")
         {
-            shipStats.FireRate = 0.5f;
+            shipStats.FireRate = 0.1f;
         }
 
         if (upgradeName == "Upgrade3_Bullet")
@@ -32,10 +41,19 @@ public class UpgradeManager : MonoBehaviour
             shipStats.hasCat = true;
         }
 
+        CheckForCat();
         dataManager.SendData();
 
         Debug.Log(shipStats.MoveSpeed);
     }
+    
+    private void CheckForCat()
+    {
+        if (shipStats.hasCat)
+        {
+            catImage.SetActive(true);
+            return;
+        }
+    }
 
-        
 }

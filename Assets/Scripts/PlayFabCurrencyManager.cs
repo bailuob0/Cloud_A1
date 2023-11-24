@@ -20,8 +20,8 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     public void PrepareShop()
     {
-        GetVirtualCurrencies();
         GetCatalog();
+        GetVirtualCurrencies();
     }
 
     public void GetVirtualCurrencies()
