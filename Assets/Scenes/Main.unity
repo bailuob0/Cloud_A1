@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44950032, g: 0.49649626, b: 0.55914444, a: 1}
+  m_IndirectSpecularColor: {r: 0.44949996, g: 0.49649584, b: 0.5591439, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -224,6 +224,7 @@ MonoBehaviour:
   restartText: {fileID: 286569452}
   mainMenuText: {fileID: 1851590482}
   leaderboardManager: {fileID: 1744588397}
+  currencyManager: {fileID: 1454836203}
 --- !u!4 &66382109
 Transform:
   m_ObjectHideFlags: 0
@@ -663,6 +664,14 @@ PrefabInstance:
     - target: {fileID: 19800002, guid: 9930946b7c5f48e44aef1e56c2de7315, type: 3}
       propertyPath: InitialModule.startRotationY.minMaxState
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900000, guid: 9930946b7c5f48e44aef1e56c2de7315, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900002, guid: 9930946b7c5f48e44aef1e56c2de7315, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9930946b7c5f48e44aef1e56c2de7315, type: 3}
@@ -1130,8 +1139,66 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 199329878007769224, guid: db79ef6ed116c4dfe87ddb5eb2fea3a0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199577833113236240, guid: db79ef6ed116c4dfe87ddb5eb2fea3a0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db79ef6ed116c4dfe87ddb5eb2fea3a0, type: 3}
+--- !u!1 &1454836202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1454836204}
+  - component: {fileID: 1454836203}
+  m_Layer: 0
+  m_Name: PlayFabCurrencyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1454836203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454836202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 574e8ac4c13747c4f8e445d04c7369e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinsValueText: {fileID: 0}
+  shopItemUIs: []
+  upgradeManager: {fileID: 0}
+  userManager: {fileID: 0}
+  catalogItems: []
+  inventoryItems: []
+--- !u!4 &1454836204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454836202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1527060000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,6 +1834,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114449464520277442, guid: cab905453db3646c3a3620a6b4848cd8, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199066287954075796, guid: cab905453db3646c3a3620a6b4848cd8, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199817795077701794, guid: cab905453db3646c3a3620a6b4848cd8, type: 3}
+      propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

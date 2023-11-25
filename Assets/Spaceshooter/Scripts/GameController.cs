@@ -27,6 +27,9 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private PlayFabLeaderboardManager leaderboardManager;
 
+    [SerializeField]
+    private PlayFabCurrencyManager currencyManager;
+
     private void Start() {
         asteroids = new List<GameObject> {
             asteroid,
@@ -80,6 +83,8 @@ public class GameController : MonoBehaviour {
         gameOver = true;
 
         leaderboardManager.SendToLeaderboard(score);
+        currencyManager.AddVirtualCurrency(score / 10);
+        Debug.Log("Added " + score / 10 + " coins");
     }
 
     public void addScore(int score){

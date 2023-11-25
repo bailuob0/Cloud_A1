@@ -16,6 +16,10 @@ public class PlayFabUserManager : MonoBehaviour
 
     [SerializeField]
     PlayerFabDataManager dataManager;
+
+    static public string currentCustomID;
+    static public string currentPlayFabID;
+
    
     public void OnButtonRegisterUser()
     {
@@ -50,12 +54,6 @@ public class PlayFabUserManager : MonoBehaviour
     private void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult r)
     {
         UpdateMessage("display name updated!" + r.DisplayName);
-    }
-
-    void OnLoginSuccess(LoginResult r)
-    {
-        UpdateMessage("Login Success! " + r.PlayFabId + " " + r.InfoResultPayload.PlayerProfile.DisplayName);
-        dataManager.GetData();
     }
 
     public void OnButtonLoginEmail()
@@ -108,6 +106,23 @@ public class PlayFabUserManager : MonoBehaviour
         PlayFabClientAPI.LoginWithEmailAddress(loginRequest, OnLoginSuccess, OnError);
     }
 
+    // Login using device
+    public void OnButtonDeviceLogin()
+    {
+        string customID = PlayerPrefs.GetString(currentCustomID, Guid.NewGuid().ToString());
+
+        PlayerPrefs.SetString(currentCustomID, customID);
+
+        // Create an account if there is no existing account
+        LoginWithCustomIDRequest request = new()
+        {
+            CreateAccount = true,
+            CustomId = customID
+        };
+
+        PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnError);
+    }
+
     public void OnButtonLogin()
     {
         if (if_email.isActiveAndEnabled && !if_username.isActiveAndEnabled)
@@ -122,6 +137,14 @@ public class PlayFabUserManager : MonoBehaviour
             return;
         }
     }
+
+    void OnLoginSuccess(LoginResult r)
+    {
+        UpdateMessage("Login Success! " + r.PlayFabId + " " + r.InfoResultPayload.PlayerProfile.DisplayName);
+        currentPlayFabID = r.PlayFabId;
+        dataManager.GetData();
+    }
+
 
     public void OnButtonLogout()
     {

@@ -12,11 +12,15 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     public UpgradeManager upgradeManager;
 
+    [SerializeField]
+    public PlayFabUserManager userManager;
+
     [HideInInspector]
     public List<CatalogItem> catalogItems;
 
     [HideInInspector]
     public List<ItemInstance> inventoryItems;
+
 
     public void PrepareShop()
     {
@@ -84,6 +88,22 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
         GetVirtualCurrencies();
         upgradeManager.ChangeShipStats(itemName);
+    }
+
+    public void AddVirtualCurrency(int amtToAdd)
+    {
+        var addRequest = new AddUserVirtualCurrencyRequest
+        {
+            Amount = amtToAdd,
+            VirtualCurrency = "CN"
+        };
+
+        PlayFabClientAPI.AddUserVirtualCurrency(addRequest, OnAddVirtualCurrencySuccess, OnError);
+    }
+
+    void OnAddVirtualCurrencySuccess(ModifyUserVirtualCurrencyResult result)
+    {
+        Debug.Log( result.BalanceChange + "added to player currency");
     }
 
     private void OnError(PlayFabError e)

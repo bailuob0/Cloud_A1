@@ -55,7 +55,7 @@ public class PlayFabLeaderboardManager : MonoBehaviour
         var lbreq = new GetLeaderboardAroundPlayerRequest()
         {
             StatisticName = "highscore",
-            MaxResultsCount = 10
+            MaxResultsCount = 5
         };
 
         PlayFabClientAPI.GetLeaderboardAroundPlayer(lbreq, OnLeaderboardAroundPlayerGet, OnError);
