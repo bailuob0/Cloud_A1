@@ -154,6 +154,23 @@ public class PlayFabUserManager : MonoBehaviour
         Debug.Log("Successfully logged out!");
     }
 
+    public void OnButtonResetPassword()
+    {
+        
+        var emailReq = new SendAccountRecoveryEmailRequest
+        {
+            TitleId = PlayFabSettings.TitleId,
+            Email = if_email.text
+        };
+
+        PlayFabClientAPI.SendAccountRecoveryEmail(emailReq, OnEmailSentSuccess, OnError);
+    } 
+
+    void OnEmailSentSuccess(SendAccountRecoveryEmailResult r)
+    {
+        Debug.Log("Recovery Email has been sent : " + r);
+    }
+
      private void OnError(PlayFabError e)
     {
         //messageBox.text = "Error" + e.GenerateErrorReport();
