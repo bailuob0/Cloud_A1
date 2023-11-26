@@ -3,6 +3,7 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
+using System.Collections;
 
 public class PlayFabCurrencyManager : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class PlayFabCurrencyManager : MonoBehaviour
     public List<ShopItemUI> shopItemUIs;
 
     public UpgradeManager upgradeManager;
+
+    [SerializeField] 
+    private GameObject messageBox;
+
+    private TMP_Text message;
+
 
     [HideInInspector]
     public List<CatalogItem> catalogItems;
@@ -106,11 +113,37 @@ public class PlayFabCurrencyManager : MonoBehaviour
     private void OnError(PlayFabError e)
     {
         //messageBox.text = "Error" + e.GenerateErrorReport();
-        Debug.Log("Error" + e.GenerateErrorReport());
+        UpdateMessage("Error" + e.GenerateErrorReport());
+    }
+
+    public void UpdateMessage(string msg)
+    {
+        StartCoroutine(UpdateMessageBox(msg));
+    }
+
+    private IEnumerator UpdateMessageBox(string msg)
+    {
+       
+        messageBox.SetActive(true);
+        
+        message.text = msg;
+
+        yield return new WaitForSeconds(2);
+
+        message.text = " ";
+
+        messageBox.gameObject.SetActive(false);
     }
 
     public void CheckPlayerInventory()
     {
+        StartCoroutine(CheckInventory());
+    }
+
+    private IEnumerator CheckInventory()
+    {
+        yield return new WaitForSeconds(1.2f);
+
         foreach (var inventoryItem in inventoryItems)
         {
             foreach (var shopItem in shopItemUIs)

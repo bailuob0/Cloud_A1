@@ -6,21 +6,34 @@ using TMPro;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using UnityEditor.VersionControl;
+using UnityEngine.AI;
 
 public class PlayFabUserManager : MonoBehaviour
 {
     [SerializeField] 
-    private TMP_Text messageBox;
+    private GameObject messageBox;
+
+    private TMP_Text message;
+
     [SerializeField] 
     private TMP_InputField if_username, if_email, if_password, if_displayName;
 
     [SerializeField]
     PlayerFabDataManager dataManager;
 
+    [SerializeField]
+    SceneChanger sceneChanger;
+
     static public string currentCustomID;
     static public string currentPlayFabID;
 
-   
+    void Start()
+    {
+        message = messageBox.GetComponentInChildren<TMP_Text>();
+    }
+
     public void OnButtonRegisterUser()
     {
          var regReq = new RegisterPlayFabUserRequest {
@@ -35,13 +48,7 @@ public class PlayFabUserManager : MonoBehaviour
     
     public void OnRegisterSuccess(RegisterPlayFabUserResult r)
     {
-         if (messageBox)
-         {
-            messageBox.text = "Register Success!" + r.PlayFabId;
-         }
-
-         else
-            Debug.Log("Register Success!" + r.PlayFabId);
+        UpdateMessage("Register Success!" + r.PlayFabId);
  
          var req = new UpdateUserTitleDisplayNameRequest
          {
@@ -143,6 +150,8 @@ public class PlayFabUserManager : MonoBehaviour
         UpdateMessage("Login Success! " + r.PlayFabId + " " + r.InfoResultPayload.PlayerProfile.DisplayName);
         currentPlayFabID = r.PlayFabId;
         dataManager.GetData();
+
+        sceneChanger.ChangeSceneDelay("Menu");
     }
 
 
@@ -151,14 +160,14 @@ public class PlayFabUserManager : MonoBehaviour
         PlayFabClientAPI.ForgetAllCredentials();
         SceneManager.LoadScene("StartMenu");
 
-        Debug.Log("Successfully logged out!");
+        UpdateMessage("Successfully logged out!");
     }
 
     public void OnButtonResetPassword()
     {
         
         var emailReq = new SendAccountRecoveryEmailRequest
-        {
+        {  
             TitleId = PlayFabSettings.TitleId,
             Email = if_email.text
         };
@@ -168,23 +177,31 @@ public class PlayFabUserManager : MonoBehaviour
 
     void OnEmailSentSuccess(SendAccountRecoveryEmailResult r)
     {
-        Debug.Log("Recovery Email has been sent : " + r);
+        UpdateMessage("Recovery Email has been sent : " + r);
     }
 
      private void OnError(PlayFabError e)
     {
         //messageBox.text = "Error" + e.GenerateErrorReport();
-        Debug.Log("Error" + e.GenerateErrorReport());
+        UpdateMessage("Error" + e.GenerateErrorReport());
     }
 
     public void UpdateMessage(string msg)
     {
-        if (messageBox)
-        {
-            messageBox.text = msg;
-            return;
-        }
+        StartCoroutine(UpdateMessageBox(msg));
+    }
+
+    private IEnumerator UpdateMessageBox(string msg)
+    {
+       
+        messageBox.SetActive(true);
         
-        Debug.Log(msg);
+        message.text = msg;
+
+        yield return new WaitForSeconds(2);
+
+        message.text = " ";
+
+        messageBox.gameObject.SetActive(false);
     }
 }

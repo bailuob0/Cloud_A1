@@ -10,6 +10,16 @@ public class PlayerFabDataManager : MonoBehaviour
 {
     [SerializeField] ShipStats shipStats;
 
+    [SerializeField] 
+    private GameObject messageBox;
+
+    private TMP_Text message;
+
+    void Start()
+    {
+        message = messageBox.GetComponentInChildren<TMP_Text>();
+    }
+
     // call when player buys stuff + logs out
     public void SendData()
     {
@@ -28,14 +38,14 @@ public class PlayerFabDataManager : MonoBehaviour
 
     void OnSendDataSuccess(UpdateUserDataResult result)
     {
-        Debug.Log("Data sent succesfully");
+       UpdateMessage("Data sent succesfully");
     }
 
     //call on login
     public void GetData()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetDataSuccess, OnError);
-        Debug.Log("Data Retrieved");
+        UpdateMessage("Data Retrieved");
     }
 
     void OnGetDataSuccess(GetUserDataResult result)
@@ -55,6 +65,25 @@ public class PlayerFabDataManager : MonoBehaviour
 
     private void OnError(PlayFabError e)
     {
-        Debug.Log("Error" + e.GenerateErrorReport());
+        UpdateMessage("Error" + e.GenerateErrorReport());
+    }
+
+    public void UpdateMessage(string msg)
+    {
+        StartCoroutine(UpdateMessageBox(msg));
+    }
+
+    private IEnumerator UpdateMessageBox(string msg)
+    {
+       
+        messageBox.SetActive(true);
+        
+        message.text = msg;
+
+        yield return new WaitForSeconds(2);
+
+        message.text = " ";
+
+        messageBox.gameObject.SetActive(false);
     }
 }
