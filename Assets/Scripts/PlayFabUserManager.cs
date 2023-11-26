@@ -147,7 +147,7 @@ public class PlayFabUserManager : MonoBehaviour
 
     void OnLoginSuccess(LoginResult r)
     {
-        UpdateMessage("Login Success! " + r.PlayFabId + " " + r.InfoResultPayload.PlayerProfile.DisplayName);
+        UpdateMessage("Login Success!");
         currentPlayFabID = r.PlayFabId;
         dataManager.GetData();
 
