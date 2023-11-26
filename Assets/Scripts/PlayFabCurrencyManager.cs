@@ -26,6 +26,11 @@ public class PlayFabCurrencyManager : MonoBehaviour
     public List<ItemInstance> inventoryItems;
 
 
+    void Start()
+    {
+        message = messageBox.GetComponentInChildren<TMP_Text>();
+    }
+
     public void PrepareShop()
     {
         GetCatalog();

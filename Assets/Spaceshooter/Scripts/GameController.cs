@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void gameIsOver(){
-        gameOverText.text = "Game Over";
+        gameOverText.text = "Game Over" + "\n" + "Added " + score / 10 + " coins";
         gameOver = true;
 
         leaderboardManager.SendToLeaderboard(score);
