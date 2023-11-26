@@ -2575,7 +2575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipStats: {fileID: 11400000, guid: 41d7bd7b1a5462848b98f6d288bcb5a7, type: 2}
-  messageBox: {fileID: 85324030}
+  messageBox: {fileID: 240061318}
 --- !u!4 &620659397
 Transform:
   m_ObjectHideFlags: 0
@@ -3778,7 +3778,7 @@ MonoBehaviour:
   - {fileID: 1468198683}
   - {fileID: 266768329}
   upgradeManager: {fileID: 2143209442}
-  messageBox: {fileID: 85324030}
+  messageBox: {fileID: 240061318}
   catalogItems: []
   inventoryItems: []
 --- !u!1 &895451933
@@ -3810,12 +3810,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e95e93942e6a8d4181556cf5b1c84ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageBox: {fileID: 85324030}
+  messageBox: {fileID: 240061318}
   if_username: {fileID: 0}
   if_email: {fileID: 0}
   if_password: {fileID: 0}
   if_displayName: {fileID: 0}
   dataManager: {fileID: 620659396}
+  sceneChanger: {fileID: 0}
 --- !u!4 &895451935
 Transform:
   m_ObjectHideFlags: 0
