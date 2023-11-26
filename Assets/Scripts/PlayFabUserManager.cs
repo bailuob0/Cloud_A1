@@ -7,8 +7,6 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEditor.VersionControl;
-using UnityEngine.AI;
 
 public class PlayFabUserManager : MonoBehaviour
 {
