@@ -12,9 +12,6 @@ public class PlayFabCurrencyManager : MonoBehaviour
 
     public UpgradeManager upgradeManager;
 
-    [SerializeField]
-    public PlayFabUserManager userManager;
-
     [HideInInspector]
     public List<CatalogItem> catalogItems;
 
